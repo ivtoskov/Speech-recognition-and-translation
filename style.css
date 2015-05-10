@@ -1,0 +1,8 @@
+header, footer {
+	text-align: center;
+}
+
+footer {
+	padding-top: 50px;	
+	color: #666;
+}
