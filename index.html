@@ -3,23 +3,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta name="Ivaylo-Toskov" content="Bachelorarbeit"/>
-		<title xml:lang="en">Speech recognition with JS</title>
+		<title>Speech recognition with JS</title>
 
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-		<script language="javascript" type="text/javascript" src="speech-to-text-and-translation.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<script type="text/javascript" src="speech-to-text-and-translation.js"></script>
 	</head>
 	<body>
-		<header>
-			<h1>Speech recognition with JS/HTML</h1>
-		</header>
+		<div id="header">
+			<h1>Speech recognition and translation</h1>
+		</div>
 
-		<section>
-	
-		</section>
+		<div id="section">
+			<div id="input-area-wrapper">
+				<div id="input-area">
+					<span>Input</span>
+					<select>
+						<option value="en">English</option>
+						<option value="de">German</option>
+					</select>
+					<div id="input-text-area">
+						Input text
+					</div>
+				</div>
+				<div id="input-img-wrapper">
+					<img src="img/Record.png" alt="Button-for-recording" id="input-img"/>
+				</div>
+			</div>
+			<div id="output-area-wrapper">
+				<div id="output-area">
+					<span>Output</span>
+					<select>
+						<option value="en">English</option>
+						<option value="de">German</option>
+					</select>
+					<div id="output-text-area">
+						Output text
+					</div>
+				</div>
+				<div id="output-img-wrapper">
+					<img src="img/Speaker.png" alt="Button-for-recording" id="output-img"/>
+				</div>
+			</div>
+		</div>
 
-		<footer>
+		<div id="footer">
 			© 2015 Vienna University of Technology All Rights Reserved
-		</footer>
+		</div>
 	</body>
 </html>
