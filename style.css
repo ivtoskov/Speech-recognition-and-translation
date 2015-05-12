@@ -56,8 +56,12 @@ h1 {
 	cursor: pointer;
 }
 
-#output-img {
+.hidden {
 	visibility:hidden;
+}
+
+.show {
+	visibility:visible;
 }
 
 #output-area-wrapper {
