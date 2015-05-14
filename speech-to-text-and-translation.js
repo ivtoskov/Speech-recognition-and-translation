@@ -1,6 +1,9 @@
 // Test browser support
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
+// The key needed in order to use the Google Translate API
+var key = 'XXX';
+
 // Initialize some helper variables
 var isRunning = false;
 var imageWrapper = document.getElementById('input-img-wrapper');
@@ -10,6 +13,7 @@ var inputLanguageSelect = document.getElementById('input-select');
 var outputLanguageSelect = document.getElementById('output-select');
 var outputText = document.getElementById('output-text-area');
 var outputImg = document.getElementById('output-img');
+var inputLanguage 
 
 if (window.SpeechRecognition === null) {
 	alert('No speech recognition available');
@@ -22,24 +26,23 @@ if (window.SpeechRecognition === null) {
  
         // Start recognising
 	recognizer.onresult = function(event) {
-        	inputText.textContent = '';
-	  	outputText.textContent = '';
- 
-          	for (var i = event.resultIndex; i < event.results.length; i++) {
-            		if (event.results[i].isFinal) {
-		      		inputText.textContent = event.results[i][0].transcript;
-		      		outputText.textContent = event.results[i][0].transcript;
-            		} else {
-		      		inputText.textContent += event.results[i][0].transcript;
-		      		outputText.textContent += event.results[i][0].transcript;
-        		}
-		}
+		if(inputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value != outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value) {
+			inputText.textContent = '';
+		  	outputText.textContent = '';
+	 
+		  	for (var i = event.resultIndex; i < event.results.length; i++) {
+		    		if (event.results[i].isFinal) {
+			      		inputText.textContent = event.results[i][0].transcript;
+		    		} else {
+			      		inputText.textContent += event.results[i][0].transcript;
+				}
+			}
 
-		  var msg = new SpeechSynthesisUtterance(outputText.textContent);
-		  msg.lang = outputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value;
-		  outputImg.setAttribute('class','show');
-	    	  window.speechSynthesis.speak(msg);
-		  hideImg(outputText.textContent.length);
+			translateText();
+			synthesiseSpeech();
+		} else {
+			alert('Please turn off the speech recognition and select different languages');
+		}
         };
 
 	// Listen for errors
@@ -72,4 +75,32 @@ function hideImg(outputLength) {
 	setTimeout(function () {
         	outputImg.setAttribute('class','hidden');
     	}, outputLength*80);
+}
+
+function translateText() {
+	var message = inputText.textContent;
+	var source = inputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value;
+	var target = outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value;
+	var baseURI = 'https://www.googleapis.com/language/translate/v2';
+	var fullURI = baseURI + '?key=' + key + '&q=' + message + '&source=' + source + '&target=' + target;
+
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open( "GET", fullURI, false );
+	xmlHttp.send( null );
+	var jsonObject = JSON.parse(xmlHttp.response);
+	outputText.textContent = decodeHtml(jsonObject.data.translations[0].translatedText);
+}
+
+function synthesiseSpeech() {
+	var msg = new SpeechSynthesisUtterance(outputText.textContent);
+	msg.lang = outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value;
+	outputImg.setAttribute('class','show');
+	window.speechSynthesis.speak(msg);
+	hideImg(outputText.textContent.length);
+}
+
+function decodeHtml(html) {
+    	var txt = document.createElement("textarea");
+    	txt.innerHTML = html;
+	return txt.value;
 }
