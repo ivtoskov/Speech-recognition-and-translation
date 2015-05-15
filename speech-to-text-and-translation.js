@@ -32,9 +32,9 @@ if (window.SpeechRecognition === null) {
 	 
 		  	for (var i = event.resultIndex; i < event.results.length; i++) {
 		    		if (event.results[i].isFinal) {
-			      		inputText.textContent = event.results[i][0].transcript;
+			      		inputText.value = event.results[i][0].transcript;
 		    		} else {
-			      		inputText.textContent += event.results[i][0].transcript;
+			      		inputText.value += event.results[i][0].transcript;
 				}
 			}
 
@@ -78,7 +78,7 @@ function hideImg(outputLength) {
 }
 
 function translateText() {
-	var message = inputText.textContent;
+	var message = inputText.value;
 	var source = inputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value;
 	var target = outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value;
 	var baseURI = 'https://www.googleapis.com/language/translate/v2';
@@ -92,15 +92,26 @@ function translateText() {
 }
 
 function synthesiseSpeech() {
-	var msg = new SpeechSynthesisUtterance(outputText.textContent);
-	msg.lang = outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value;
-	outputImg.setAttribute('class','show');
-	window.speechSynthesis.speak(msg);
-	hideImg(outputText.textContent.length);
+	if(outputText.textContent != null && outputText.textContent != undefined && outputText.textContent != '') {
+		var msg = new SpeechSynthesisUtterance(outputText.textContent);
+		msg.lang = outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value;
+		outputImg.setAttribute('class','show');
+		window.speechSynthesis.speak(msg);
+		hideImg(outputText.textContent.length);
+	}
 }
 
 function decodeHtml(html) {
     	var txt = document.createElement("textarea");
     	txt.innerHTML = html;
 	return txt.value;
+}
+
+function translateAndSynthesize() {
+	if(!isRunning) {
+		translateText();
+		synthesiseSpeech();
+	} else {
+		alert('Please turn off the recording if you are willing to self type');
+	}
 }

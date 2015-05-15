@@ -1,3 +1,7 @@
+textarea {
+    resize: none;
+}
+
 body {
 	text-align: center;
 }
@@ -51,7 +55,7 @@ h1 {
 }
 
 #input-img, #output-img {
-	width: 23%;
+	width: 100%;
 	max-width: 128px;
 	cursor: pointer;
 }
@@ -70,4 +74,43 @@ h1 {
 	border-top-style: solid;
 	border-top-width: 1px;
 	border-top-color: #666;
+}
+
+#input-img-wrapper {
+	width:23%;
+	float:left;
+}
+
+
+#text-to-speech-button {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+	display: inline-block;
+	padding: 6px 3px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	width: 23%;
+}
+
+@media (max-width: 580px) {
+	#text-to-speech-button {
+		padding: 6px 0px;
+		font-size: 10px;
+	}
 }

@@ -23,13 +23,12 @@
 						<option value="en">English</option>
 						<option value="de">German</option>
 					</select>
-					<div id="input-text-area">
-						
-					</div>
+					<textarea id="input-text-area" rows="10" cols="100"></textarea>
 				</div>
 				<div id="input-img-wrapper">
 					<img src="img/Record.png" alt="Button-for-recording" id="input-img"/>
 				</div>
+				<button type="button" id="text-to-speech-button" onclick="translateAndSynthesize()">Translate</button>
 			</div>
 			<div id="output-area-wrapper">
 				<div id="output-area">
@@ -39,9 +38,7 @@
 						<option value="en">English</option>
 						<option value="bg">Bulgarian</option>
 					</select>
-					<div id="output-text-area">
-						
-					</div>
+					<textarea id="output-text-area" readonly="readonly" rows="10" cols="100"></textarea>
 				</div>
 				<div id="output-img-wrapper">
 					<img src="img/Speaker.png" alt="Image-while-talking" id="output-img" class="hidden"/>
