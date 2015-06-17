@@ -2,7 +2,7 @@
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
 // The key needed in order to use the Google Translate API
-var key = 'XXX';
+var key = 'AIzaSyC-FaIc8QZWTBnROt99S_vKB3uL9DhbMuU';
 
 // Initialize some helper variables
 var isRunning = false;
@@ -13,6 +13,7 @@ var inputLanguageSelect = document.getElementById('input-select');
 var outputLanguageSelect = document.getElementById('output-select');
 var outputText = document.getElementById('output-text-area');
 var outputImg = document.getElementById('output-img');
+var translateButton = document.getElementById('text-to-speech-button');
 var inputLanguage 
 
 if (window.SpeechRecognition === null) {
@@ -55,6 +56,7 @@ if (window.SpeechRecognition === null) {
 		if(!isRunning) {
 			isRunning = true;
 			recognizer.lang = inputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value;
+			translateButton.setAttribute('style', 'background-color: #d3d3d3; cursor: default;');
 			image.setAttribute('src', 'img/Stop.png');
 			try {
 		    		recognizer.start();
@@ -63,6 +65,7 @@ if (window.SpeechRecognition === null) {
 		  	}
 		} else {
 			isRunning = false;
+			translateButton.setAttribute('style', 'background-color: #337ab7; cursor: pointer;');
 			image.setAttribute('src', 'img/Record.png');
 			recognizer.stop();
 		}
@@ -111,7 +114,5 @@ function translateAndSynthesize() {
 	if(!isRunning) {
 		translateText();
 		synthesiseSpeech();
-	} else {
-		alert('Please turn off the recording if you are willing to self type');
-	}
+	} 
 }

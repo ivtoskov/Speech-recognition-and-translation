@@ -76,11 +76,10 @@ h1 {
 	border-top-color: #666;
 }
 
-#input-img-wrapper {
+#input-img-wrapper, #output-img-wrapper {
 	width:23%;
 	float:left;
 }
-
 
 #text-to-speech-button {
 	color: #fff;
@@ -106,11 +105,39 @@ h1 {
 	border: 1px solid transparent;
 	border-radius: 4px;
 	width: 23%;
+	margin-top: 20px;
+}
+
+@media (max-width: 800px) {
+	h1 {
+		font-size: 2.0em;
+	}
+
+	#section {
+  		padding-top: 20px; 
+	}
+	
+	#section, #input-area-wrapper, #output-area-wrapper {
+		width: 90%;
+	}
 }
 
 @media (max-width: 580px) {
 	#text-to-speech-button {
 		padding: 6px 0px;
 		font-size: 10px;
+		
+	}
+
+	h1 {
+		font-size: 1.5em;
+	}
+
+	#section {
+  		padding-top: 0px; 
+	}
+	
+	#section, #input-area-wrapper, #output-area-wrapper {
+		width: 100%;
 	}
 }
