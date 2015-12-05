@@ -2,7 +2,7 @@
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
 // The key needed in order to use the Google Translate API
-var key = 'AIzaSyC-FaIc8QZWTBnROt99S_vKB3uL9DhbMuU';
+var key = 'xxx-xxx_xxx';
 
 // Initialize some helper variables
 var isRunning = false;
@@ -14,7 +14,6 @@ var outputLanguageSelect = document.getElementById('output-select');
 var outputText = document.getElementById('output-text-area');
 var outputImg = document.getElementById('output-img');
 var translateButton = document.getElementById('text-to-speech-button');
-var inputLanguage 
 
 if (window.SpeechRecognition === null) {
 	alert('No speech recognition available');
@@ -30,7 +29,7 @@ if (window.SpeechRecognition === null) {
 		if(inputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value != outputLanguageSelect.options[ outputLanguageSelect.selectedIndex ].value) {
 			inputText.textContent = '';
 		  	outputText.textContent = '';
-	 
+	 		console.log('Reached 2');
 		  	for (var i = event.resultIndex; i < event.results.length; i++) {
 		    		if (event.results[i].isFinal) {
 			      		inputText.value = event.results[i][0].transcript;
@@ -80,6 +79,7 @@ function hideImg(outputLength) {
     	}, outputLength*80);
 }
 
+// Function that translates the text in the input field
 function translateText() {
 	var message = inputText.value;
 	var source = inputLanguageSelect.options[ inputLanguageSelect.selectedIndex ].value;
@@ -89,11 +89,16 @@ function translateText() {
 
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open( "GET", fullURI, false );
-	xmlHttp.send( null );
+	try {
+		xmlHttp.send( null );
+	} catch(ex) {
+		alert('There was error encountered while translating the text. Please check your Internet connection.');
+	}
 	var jsonObject = JSON.parse(xmlHttp.response);
 	outputText.textContent = decodeHtml(jsonObject.data.translations[0].translatedText);
 }
 
+// Function that synthesises speech based on the translation
 function synthesiseSpeech() {
 	if(outputText.textContent != null && outputText.textContent != undefined && outputText.textContent != '') {
 		var msg = new SpeechSynthesisUtterance(outputText.textContent);
@@ -104,12 +109,14 @@ function synthesiseSpeech() {
 	}
 }
 
+// A helper function that decodes html content
 function decodeHtml(html) {
     	var txt = document.createElement("textarea");
     	txt.innerHTML = html;
 	return txt.value;
 }
 
+// A function that wraps the translation and speech synthesis
 function translateAndSynthesize() {
 	if(!isRunning) {
 		translateText();
